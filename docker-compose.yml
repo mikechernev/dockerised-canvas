@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./canvas:/code
+            - ./site.conf:/etc/nginx/conf.d/default.conf
+    php:
+        image: mikechernev/php7-fpm-laravel
+        volumes:
+            - ./canvas:/code
+    db:
+        image: mysql:latest
+        volumes:
+            - "./.data/db:/var/lib/mysql"
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_DATABASE: canvas
+            MYSQL_USER: canvas
+            MYSQL_PASSWORD: canvas
+
